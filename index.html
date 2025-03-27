@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Number</title>
+    <link rel="stylesheet" href="index.css">
+  
+</head>
+<body>
+
+  <h1>Guess the Number Game</h1>
+  <p>Guess a number between 1 and 100:</p>
+
+  <input type="number" id="userGuess">
+  <button onclick="checkGuess()">Submit Guess</button>
+
+  <p id="message"></p>
+  <p id="chancesLeft">Chances left: 10</p>
+
+  <button id="replayButton" onclick="restartGame()" style="display:none;">Play Again</button>
+
+  <script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let chances = 10;
+
+    function checkGuess() {
+      let userGuess = document.getElementById('userGuess').value;
+      let messageElement = document.getElementById('message');
+      let chancesLeftElement = document.getElementById('chancesLeft');
+
+      // Check if the guess is valid
+      if (userGuess < 1 || userGuess > 100 || userGuess === '') {
+        messageElement.innerHTML = "Please enter a number between 1 and 100.";
+        return;
+      }
+
+      chances--;
+      if (userGuess < randomNumber) {
+        messageElement.innerHTML = "Too low! Try again.";
+      } else if (userGuess > randomNumber) {
+        messageElement.innerHTML = "Too high! Try again.";
+      } else {
+        messageElement.innerHTML = "Congratulations! You guessed it!";
+        document.getElementById('replayButton').style.display = 'block';
+        return;
+      }
+
+      if (chances === 0) {
+        messageElement.innerHTML = "Game Over! You've used all your chances.";
+        document.getElementById('replayButton').style.display = 'block';
+      }
+
+      chancesLeftElement.innerHTML = "Chances left: " + chances;
+    }
+
+    function restartGame() {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      chances = 10; 
+      document.getElementById('userGuess').value = ''; 
+      document.getElementById('message').innerHTML = '';
+      document.getElementById('chancesLeft').innerHTML = 'Chances left: 10';
+      document.getElementById('replayButton').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
